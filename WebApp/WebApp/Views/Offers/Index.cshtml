@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Offers" asp-action="Create">Add new offer</a>
 </p>
 <table class="table">
     <thead>

@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.Identity.UI": "6.0.4",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.5",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.5",
+          "Microsoft.VisualStudio.Web.CodeGeneration": "6.0.5",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.5",
           "Swashbuckle.AspNetCore": "6.3.0"
         },
