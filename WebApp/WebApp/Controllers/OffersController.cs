@@ -22,9 +22,12 @@ namespace WebApp.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
-              return _context.Offer != null ? 
-                          View(await _context.Offer.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Offer'  is null.");
+            return _context.Offer != null ?
+                View(
+                    await _context.Offer
+                        .Include(o => o.Photos).ToListAsync()
+                )
+                :   Problem("Entity set 'ApplicationDbContext.Offer'  is null.");
         }
 
         // GET: Offers/Details/5
@@ -36,7 +39,9 @@ namespace WebApp.Controllers
             }
 
             var offer = await _context.Offer
+                .Include(o => o.Photos)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (offer == null)
             {
                 return NotFound();
