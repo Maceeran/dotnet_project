@@ -1,0 +1,12 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApp.Models.Photo
+@{
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<form enctype="multipart/form-data" method="post" asp-action="Upload">
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <input asp-for="OfferId" type="hidden" value="@Model.OfferId" />
+    <input asp-for="File" type="file"/>
+    <input class="btn" type="submit" value="Upload" />
+    @Model.OfferId
+</form>

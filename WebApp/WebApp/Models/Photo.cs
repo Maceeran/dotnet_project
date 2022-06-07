@@ -10,6 +10,6 @@ namespace WebApp.Models
         public int OfferId { get; set; }
         [Display(Name = "Photo")]
         [DataType(DataType.Upload)]
-        public IFormFile PhotoFile { get; set; } 
+        public IFormFile File { get; set; } 
     }
 }

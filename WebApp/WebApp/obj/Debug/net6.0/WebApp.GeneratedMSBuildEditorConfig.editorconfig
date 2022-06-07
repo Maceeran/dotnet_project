@@ -71,8 +71,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmZXJzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/studia/dotnet/WebApp/WebApp/Views/Photos/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvdG9zXEluZGV4LmNzaHRtbA==
+[E:/studia/dotnet/WebApp/WebApp/Views/Photos/Upload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvdG9zXFVwbG9hZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/studia/dotnet/WebApp/WebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
