@@ -13,6 +13,12 @@ namespace WebApp.Controllers
             _context = context;
         }
 
+        public IActionResult List(int id)
+        {
+            IEnumerable<Photo> photos = _context.Photo.Where(p => p.OfferId == id);
+            return View(photos);
+        }
+
         public IActionResult Upload(int id)
         {
             Photo model = new Photo() { OfferId = id };

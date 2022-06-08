@@ -67,8 +67,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/studia/dotnet/WebApp/WebApp/Views/Offers/Marketplace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmZXJzXE1hcmtldHBsYWNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/studia/dotnet/WebApp/WebApp/Views/Offers/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmZXJzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/studia/dotnet/WebApp/WebApp/Views/Photos/List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvdG9zXExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/studia/dotnet/WebApp/WebApp/Views/Photos/Upload.cshtml]

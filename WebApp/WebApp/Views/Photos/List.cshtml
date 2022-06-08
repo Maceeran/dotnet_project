@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebApp.Models.Photo>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Photos list</h1>
+
+<a href="javascript: history.go(-1)">Go back</a>
+
+<div>
+    <div class="row">
+        @foreach (var photo in Model)
+        {
+                <img src="/@photo.FileAddress" class="img-lg"/>
+        }
+    </div>
+</div>

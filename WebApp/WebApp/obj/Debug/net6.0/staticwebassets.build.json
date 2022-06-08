@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "aoErLnRdjhW9M44Ri5ILitTkobgNvr8IlL8tmu5iCiw=",
+  "Hash": "q2DOP96UW1Li+t1xiRFyDHlLJObgChRBbF1Edpw/5Sk=",
   "Source": "WebApp",
   "BasePath": "_content/WebApp",
   "Mode": "Default",
@@ -1122,23 +1122,6 @@
       "OriginalItemSpec": "wwwroot\\images\\0\\0266554465.jpeg"
     },
     {
-      "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\images\\0266554465.jpeg",
-      "SourceId": "WebApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\",
-      "BasePath": "_content/WebApp",
-      "RelativePath": "images/0266554465.jpeg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\0266554465.jpeg"
-    },
-    {
       "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\images\\4\\0266554465.jpeg",
       "SourceId": "WebApp",
       "SourceType": "Discovered",
@@ -1171,6 +1154,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\5\\0266554465.jpeg"
+    },
+    {
+      "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\images\\no-image-icon.jpg",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/no-image-icon.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\no-image-icon.jpg"
     },
     {
       "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\js\\site.js",

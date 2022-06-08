@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WebApp.Models.Offer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Offer Marketplace</h1>
+    <p>Please take a look at the offers listed below</p>
+</div>
+
+<div class="container">
+    @foreach (var offer in Model)
+    {
+        <div class="row border-bottom py-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row justify-content-center">
+                        @if (offer.Photos == null || offer.Photos.Count() == 0)
+                        {
+                            <img src="@Consts.BlankImagePath" class="img-sm"/>
+                        }
+                        else
+                        {
+                            <img src="/@offer.Photos[0].FileAddress" class="img-sm"/>
+                        }
+                    </div>
+                    <div class="row">
+                        <a style="text-align: center" asp-controller="Photos" asp-action="List" asp-route-id="@offer.Id">View other photos</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="col">
+                        @offer.Description
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                    <span style="width: auto">Valid until: <span style="font-weight: bold">@Html.DisplayFor(m => offer.VoidDate)</span></span>
+            </div>
+        </div>
+    }
+</div>

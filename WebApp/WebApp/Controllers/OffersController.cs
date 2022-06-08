@@ -20,6 +20,17 @@ namespace WebApp.Controllers
         }
 
         // GET: Offers
+        public async Task<IActionResult> Marketplace()
+        {
+            return _context.Offer != null ?
+                View(
+                    await _context.Offer
+                        .Include(o => o.Photos).ToListAsync()
+                )
+                : Problem("Entity set 'ApplicationDbContext.Offer'  is null.");
+        }
+
+        // GET: Offers
         public async Task<IActionResult> Index()
         {
             return _context.Offer != null ?
