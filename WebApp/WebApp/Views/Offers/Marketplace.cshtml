@@ -30,14 +30,20 @@
                         <a style="text-align: center" asp-controller="Photos" asp-action="List" asp-route-id="@offer.Id">View other photos</a>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="col">
-                        @offer.Description
-                    </div>
+                <div class="col-md-1">
+                    Description:
+                </div>
+                <div class="col-md-8">
+                    @offer.Description
                 </div>
             </div>
-            <div class="row justify-content-end">
+            <div class="row">
+                <div class="row justify-content-end">
                     <span style="width: auto">Valid until: <span style="font-weight: bold">@Html.DisplayFor(m => offer.VoidDate)</span></span>
+                </div>
+                <div class="row justify-content-end">
+                    <span style="width: auto">Retrieval address: <span style="font-weight: bold">@Html.DisplayFor(m => offer.RetrievalAddress)</span></span>
+                </div>
             </div>
         </div>
     }

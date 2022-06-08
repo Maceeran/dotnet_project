@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Dynamic;
 using System.Net.Http.Headers;
 using WebApp.Data;
 using WebApp.Models;
@@ -21,7 +22,11 @@ namespace WebApp.Controllers
 
         public IActionResult Upload(int id)
         {
-            Photo model = new Photo() { OfferId = id };
+            Photo photo = new Photo() { OfferId = id };
+            IEnumerable<Photo> photos = _context.Photo.Where(p => p.OfferId == id);
+            dynamic model = new ExpandoObject();
+            model.Photo = photo;
+            model.Photos = photos;
             return View("Upload", model);
         }
 
@@ -54,7 +59,7 @@ namespace WebApp.Controllers
 
                         _context.Add(photo);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Index", "Offers");
+                        return RedirectToAction("Upload", "Photos", offerId);
                     }
                     return BadRequest();
                 }
@@ -67,6 +72,18 @@ namespace WebApp.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+        public async Task<IActionResult> Delete(int id, int offerId)
+        {
+            var photo = await _context.Photo.FindAsync(id);
+            if (photo != null)
+            {
+                _context.Photo.Remove(photo);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Upload", "Photos", new { id = offerId });
         }
     }
 }

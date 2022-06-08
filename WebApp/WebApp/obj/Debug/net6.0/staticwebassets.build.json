@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "q2DOP96UW1Li+t1xiRFyDHlLJObgChRBbF1Edpw/5Sk=",
+  "Hash": "i29QhdUbt0xDkx6rkVW0GGd5rxNkcW6V+Huib0dm8YQ=",
   "Source": "WebApp",
   "BasePath": "_content/WebApp",
   "Mode": "Default",
@@ -1137,6 +1137,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\4\\0266554465.jpeg"
+    },
+    {
+      "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\images\\4\\no-image-icon-0.jpg",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/4/no-image-icon-0.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\4\\no-image-icon-0.jpg"
     },
     {
       "Identity": "E:\\studia\\dotnet\\WebApp\\WebApp\\wwwroot\\images\\5\\0266554465.jpeg",
