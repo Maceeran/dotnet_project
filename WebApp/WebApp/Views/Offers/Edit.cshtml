@@ -1,4 +1,5 @@
-﻿@model WebApp.Models.Offer
+﻿@using WebApp.Models
+@model Offer
 
 @{
     ViewData["Title"] = "Edit";
@@ -26,8 +27,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="VoidDate" class="control-label"></label>
-                <input asp-for="VoidDate" class="form-control" />
+                <input asp-for="VoidDate" class="form-control" type="date"/>
                 <span asp-validation-for="VoidDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" class="form-control" asp-items="Html.GetEnumSelectList<Category>()">
+
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

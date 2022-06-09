@@ -1,7 +1,9 @@
-﻿@model IEnumerable<WebApp.Models.Offer>
+﻿@using WebApp.Models
+@model IEnumerable<Offer>
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["Categories"] = Html.GetEnumSelectList<Category>();
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +12,19 @@
     <p>Please take a look at the offers listed below</p>
 </div>
 
+<h3>
+    Filters:
+</h3>
+<h4>
+    Categories:
+</h4>
+<dl class="row border-bottom py-2">
+@foreach (var category in Html.GetEnumSelectList<Category>())
+    {
+        <a asp-action="Marketplace" asp-route-filterCategory="@category.Value">@category.Text</a>
+    }
+    <a asp-action="Marketplace" asp-route-filterCategory="">--- Clear category filter</a>
+</dl>
 <div class="container">
     @foreach (var offer in Model)
     {

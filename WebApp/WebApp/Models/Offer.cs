@@ -9,6 +9,7 @@ namespace WebApp.Models
         public string RetrievalAddress { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime VoidDate { get; set; }
-        public List<Photo> Photos { get; set; }
+        public List<Photo>? Photos { get; set; }
+        public Category Category { get; set; }
     }
 }

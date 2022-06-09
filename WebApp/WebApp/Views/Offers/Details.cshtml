@@ -30,12 +30,28 @@
             @Html.DisplayFor(model => model.VoidDate)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Photos)
         </dt>
         <dd class = "col-sm-10">
-            @foreach (var photo in Model.Photos)
+            @if (Model.Photos is not null)
             {
-                <img src="/@photo.FileAddress"/ class="img-md">
+                @if (Model.Photos is not null && Model.Photos.Count() == 0)
+                {
+                    <span>-</span>
+                }
+                else
+                {
+                    @foreach (var photo in Model.Photos)
+                    {
+                        <img src="/@photo.FileAddress"/ class="img-md">
+                    }
+                }
             }
         </dd>
     </dl>

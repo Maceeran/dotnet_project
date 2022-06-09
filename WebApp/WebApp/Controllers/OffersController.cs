@@ -20,14 +20,24 @@ namespace WebApp.Controllers
         }
 
         // GET: Offers
-        public async Task<IActionResult> Marketplace()
+        public async Task<IActionResult> Marketplace(string filterCategory)
         {
-            return _context.Offer != null ?
-                View(
+            ViewData["filterCategory"] = filterCategory;
+
+            if (filterCategory != null)
+            {
+                Category parsedFilterCategory = (Category) Enum.Parse(typeof(Category), filterCategory);
+                return View(
+                        await _context.Offer
+                            .Include(o => o.Photos)
+                            .Where(o => o.Category == parsedFilterCategory)
+                            .ToListAsync()
+                    );
+            }
+            return View(
                     await _context.Offer
                         .Include(o => o.Photos).ToListAsync()
-                )
-                : Problem("Entity set 'ApplicationDbContext.Offer'  is null.");
+                );
         }
 
         // GET: Offers
@@ -71,7 +81,7 @@ namespace WebApp.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,Description,RetrievalAddress,VoidDate")] Offer offer)
+        public async Task<IActionResult> Create([Bind("Id,Description,RetrievalAddress,VoidDate,Category")] Offer offer)
         {
             if (ModelState.IsValid)
             {
