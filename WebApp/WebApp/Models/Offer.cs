@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApp.Models
 {
@@ -11,5 +12,7 @@ namespace WebApp.Models
         public DateTime VoidDate { get; set; }
         public List<Photo>? Photos { get; set; }
         public Category Category { get; set; }
+        public string? UserId { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

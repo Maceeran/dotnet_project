@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+
 
 namespace WebApp.Controllers
 {
@@ -43,6 +46,9 @@ namespace WebApp.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             return _context.Offer != null ?
                 View(
                     await _context.Offer
@@ -54,6 +60,9 @@ namespace WebApp.Controllers
         // GET: Offers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (id == null || _context.Offer == null)
             {
                 return NotFound();
@@ -74,6 +83,9 @@ namespace WebApp.Controllers
         // GET: Offers/Create
         public IActionResult Create()
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             return View();
         }
 
@@ -83,6 +95,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Description,RetrievalAddress,VoidDate,Category")] Offer offer)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (ModelState.IsValid)
             {
                 _context.Add(offer);
@@ -95,6 +110,9 @@ namespace WebApp.Controllers
         // GET: Offers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (id == null || _context.Offer == null)
             {
                 return NotFound();
@@ -115,6 +133,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Description,RetrievalAddress,VoidDate")] Offer offer)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (id != offer.Id)
             {
                 return NotFound();
@@ -146,6 +167,9 @@ namespace WebApp.Controllers
         // GET: Offers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (id == null || _context.Offer == null)
             {
                 return NotFound();
@@ -166,6 +190,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             if (_context.Offer == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Offer'  is null.");

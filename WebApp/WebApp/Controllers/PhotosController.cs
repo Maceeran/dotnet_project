@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Dynamic;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 
@@ -22,6 +23,9 @@ namespace WebApp.Controllers
 
         public IActionResult Upload(int id)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             Photo photo = new Photo() { OfferId = id };
             IEnumerable<Photo> photos = _context.Photo.Where(p => p.OfferId == id);
             dynamic model = new ExpandoObject();
@@ -33,9 +37,11 @@ namespace WebApp.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> Upload([Bind("OfferId")] Photo photo)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             try
             {
-
                 if (ModelState.IsValid)
                 {
                     var file = Request.Form.Files[0];
@@ -76,6 +82,9 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Delete(int id, int offerId)
         {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
             var photo = await _context.Photo.FindAsync(id);
             if (photo != null)
             {
