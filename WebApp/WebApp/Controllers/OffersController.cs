@@ -22,7 +22,6 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: Offers
         public async Task<IActionResult> Marketplace(string filterCategory)
         {
             ViewData["filterCategory"] = filterCategory;
@@ -52,7 +51,9 @@ namespace WebApp.Controllers
             return _context.Offer != null ?
                 View(
                     await _context.Offer
-                        .Include(o => o.Photos).ToListAsync()
+                        .Include(o => o.Photos)
+                        .Where(o => o.UserId == currentUser.Value)
+                        .ToListAsync()
                 )
                 :   Problem("Entity set 'ApplicationDbContext.Offer'  is null.");
         }
@@ -100,6 +101,7 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                offer.UserId = currentUser.Value;
                 _context.Add(offer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -145,6 +147,7 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    offer.UserId = currentUser.Value;
                     _context.Update(offer);
                     await _context.SaveChangesAsync();
                 }
