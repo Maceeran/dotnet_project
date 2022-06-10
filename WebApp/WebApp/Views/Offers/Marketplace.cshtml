@@ -45,7 +45,14 @@
 <div class="container">
     @foreach (var offer in Model)
     {
-        <div class="row border-bottom py-4">
+        <div class="row border-bottom py-4" style="text-align:center; @(isOfferReserved(offer) ? "background-color:#FEFFC3" : "")">
+            @isOfferMine(offer)
+            @if (isOfferReserved(offer))
+            {
+                <div style="font-weight:bold">
+                    OFFER IS RESERVED
+                </div>
+            }
             <div class="row">
                 <div class="col-md-3">
                     <div class="row justify-content-center">
@@ -76,7 +83,7 @@
                 <div class="row justify-content-end">
                     <span style="width: auto">Retrieval address: <span style="font-weight: bold">@Html.DisplayFor(m => offer.RetrievalAddress)</span></span>
                 </div>
-                @if (isAuthenticated())
+                @if (isAuthenticated() && !isOfferMine(offer))
                 {
                         if (isUserInterested(offer))
                         {
@@ -117,5 +124,20 @@
 
         string userId = user.Value;
         return offer.InterestedUsers.Exists(iu => iu.UserId == userId);
+    }
+
+    bool isOfferReserved(Offer offer)
+    {
+        return offer.InterestedUsers.Count() > 0;
+    }
+
+    bool isOfferMine(Offer offer)
+    {
+        Claim user = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (user == null)
+            return false;
+        if (offer.UserId != user.Value)
+            return false;
+        return true;
     }
 }
