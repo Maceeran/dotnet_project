@@ -16,5 +16,6 @@ namespace WebApp.Data
         }
         public DbSet<WebApp.Models.Offer>? Offer { get; set; }
         public DbSet<WebApp.Models.Photo>? Photo { get; set; }
+        public DbSet<WebApp.Models.UserInterestedOffer>? UserInterestedOffer { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace WebApp.Models
         public Category Category { get; set; }
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
+        public List<UserInterestedOffer>? InterestedUsers { get; set; }
     }
 }

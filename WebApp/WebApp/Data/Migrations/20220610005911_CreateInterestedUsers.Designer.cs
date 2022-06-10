@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
@@ -11,9 +12,10 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220610005911_CreateInterestedUsers")]
+    partial class CreateInterestedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,7 +287,11 @@ namespace WebApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("OfferId")
+                    b.Property<string>("OfferId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OfferId1")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -294,7 +300,7 @@ namespace WebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfferId");
+                    b.HasIndex("OfferId1");
 
                     b.HasIndex("UserId");
 
@@ -376,7 +382,7 @@ namespace WebApp.Data.Migrations
                 {
                     b.HasOne("WebApp.Models.Offer", "Offer")
                         .WithMany("InterestedUsers")
-                        .HasForeignKey("OfferId")
+                        .HasForeignKey("OfferId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

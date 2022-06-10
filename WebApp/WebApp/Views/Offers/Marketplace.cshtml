@@ -1,4 +1,5 @@
-﻿@using WebApp.Models
+﻿@using System.Security.Claims
+@using WebApp.Models
 @model IEnumerable<Offer>
 
 @{
@@ -75,7 +76,46 @@
                 <div class="row justify-content-end">
                     <span style="width: auto">Retrieval address: <span style="font-weight: bold">@Html.DisplayFor(m => offer.RetrievalAddress)</span></span>
                 </div>
+                @if (isAuthenticated())
+                {
+                        if (isUserInterested(offer))
+                        {
+                            <div class="row justify-content-end">
+                                <form asp-action="ToggleOfferInterest" method="post" style="display:inline; width:auto">
+                                    <input name="offerId" value="@offer.Id" hidden />
+                                    <input type="submit" value="Deny interest in offer" class="btn btn-danger"/>
+                                </form>
+                            </div>
+                        } else
+                        {
+                            <div class="row justify-content-end">
+                                <form asp-action="ToggleOfferInterest" method="post" style="display:inline; width:auto">
+                                    <input name="offerId" value="@offer.Id" hidden />
+                                    <input type="submit" value="Declare interest in offer" class="btn btn-primary"/>
+                                </form>
+                            </div>
+                        }
+                }
             </div>
         </div>
     }
 </div>
+
+@functions
+{
+    bool isAuthenticated()
+    {
+        Claim user = User.FindFirst(ClaimTypes.NameIdentifier);
+        return user != null;
+    }
+
+    bool isUserInterested(Offer offer)
+    {
+        Claim user = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (user == null || offer.InterestedUsers == null)
+            return false;
+
+        string userId = user.Value;
+        return offer.InterestedUsers.Exists(iu => iu.UserId == userId);
+    }
+}

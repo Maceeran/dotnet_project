@@ -48,6 +48,7 @@ namespace WebApp.Controllers
 
             List<Offer> offers = await _context.Offer
                 .Include(o => o.Photos)
+                .Include(o => o.InterestedUsers)
                 .ToListAsync();
 
             List<Offer> filteredOffers = new List<Offer>();
@@ -59,6 +60,28 @@ namespace WebApp.Controllers
                 }
             }
             return View(filteredOffers);
+        }
+        public async Task<IActionResult> ToggleOfferInterest(string offerId)
+        {
+            var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (currentUser == null) return View(Consts.UnauthErrorPagePath);
+
+            UserInterestedOffer userInterestedOffer = await _context.UserInterestedOffer
+                .Where(uio => uio.OfferId == int.Parse(offerId) && uio.UserId == currentUser.Value)
+                .FirstOrDefaultAsync();
+
+            if (userInterestedOffer == null)
+            {
+                userInterestedOffer = new UserInterestedOffer();
+                userInterestedOffer.OfferId = int.Parse(offerId);
+                userInterestedOffer.UserId = currentUser.Value;
+                _context.Add(userInterestedOffer);
+            } else
+            {
+                _context.Remove(userInterestedOffer);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Marketplace");
         }
 
         // GET: Offers
