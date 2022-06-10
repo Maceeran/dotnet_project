@@ -15,8 +15,8 @@ namespace WebApp.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OfferId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OfferId1 = table.Column<int>(type: "int", nullable: false)
+                    OfferId = table.Column<int>(type: "int", nullable: false),
+                    ReservedForUser = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,17 +28,17 @@ namespace WebApp.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserInterestedOffer_Offer_OfferId1",
-                        column: x => x.OfferId1,
+                        name: "FK_UserInterestedOffer_Offer_OfferId",
+                        column: x => x.OfferId,
                         principalTable: "Offer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserInterestedOffer_OfferId1",
+                name: "IX_UserInterestedOffer_OfferId",
                 table: "UserInterestedOffer",
-                column: "OfferId1");
+                column: "OfferId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserInterestedOffer_UserId",

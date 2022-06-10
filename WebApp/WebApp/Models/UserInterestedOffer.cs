@@ -7,5 +7,11 @@
         public ApplicationUser User { get; set; }
         public int OfferId { get; set; }
         public Offer Offer { get; set; }
+        public bool ReservedForUser { get; set; }
+
+        public UserInterestedOffer()
+        {
+            ReservedForUser = false;
+        }
     }
 }

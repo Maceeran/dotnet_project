@@ -162,7 +162,10 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var offer = await _context.Offer.FindAsync(id);
+            var offer = await _context.Offer
+                .Include(o => o.InterestedUsers)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (offer == null)
             {
                 return NotFound();

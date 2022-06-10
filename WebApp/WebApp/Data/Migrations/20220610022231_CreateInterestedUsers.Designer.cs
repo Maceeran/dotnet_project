@@ -12,7 +12,7 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220610005911_CreateInterestedUsers")]
+    [Migration("20220610022231_CreateInterestedUsers")]
     partial class CreateInterestedUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -287,12 +287,11 @@ namespace WebApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("OfferId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OfferId1")
+                    b.Property<int>("OfferId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("ReservedForUser")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -300,7 +299,7 @@ namespace WebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfferId1");
+                    b.HasIndex("OfferId");
 
                     b.HasIndex("UserId");
 
@@ -382,7 +381,7 @@ namespace WebApp.Data.Migrations
                 {
                     b.HasOne("WebApp.Models.Offer", "Offer")
                         .WithMany("InterestedUsers")
-                        .HasForeignKey("OfferId1")
+                        .HasForeignKey("OfferId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
