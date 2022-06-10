@@ -15,16 +15,32 @@
 <h3>
     Filters:
 </h3>
+<hr/>
 <h4>
     Categories:
 </h4>
-<dl class="row border-bottom py-2">
+<dl class="row py-2">
 @foreach (var category in Html.GetEnumSelectList<Category>())
     {
         <a asp-action="Marketplace" asp-route-filterCategory="@category.Value">@category.Text</a>
     }
     <a asp-action="Marketplace" asp-route-filterCategory="">--- Clear category filter</a>
 </dl>
+
+<h4>
+    Search:
+</h4>
+<div>
+    <form asp-action="Marketplace" method="get"  style="display:inline">
+        <input name="searchString" value="@ViewData["searchString"]" class="form-control" />
+        <input type="submit" value="Search" class="btn btn-primary" style="margin-top:10px" />
+    </form>
+    <form asp-action="Marketplace" method="get" style="display:inline">
+        <input name="searchString" value="" class="form-control" hidden />
+        <input type="submit" value="Clear" class="btn btn-secondary" style="margin-top:10px"/>
+    </form>
+</div>
+<hr/>
 <div class="container">
     @foreach (var offer in Model)
     {

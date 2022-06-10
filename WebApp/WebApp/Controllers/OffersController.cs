@@ -21,25 +21,44 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-
-        public async Task<IActionResult> Marketplace(string filterCategory)
+        bool marketplaceWhereConditions(Offer o, string filterCategory, string searchString)
         {
-            ViewData["filterCategory"] = filterCategory;
+            bool condition1 = true;
+            bool condition2 = true;
 
             if (filterCategory != null)
             {
-                Category parsedFilterCategory = (Category) Enum.Parse(typeof(Category), filterCategory);
-                return View(
-                        await _context.Offer
-                            .Include(o => o.Photos)
-                            .Where(o => o.Category == parsedFilterCategory)
-                            .ToListAsync()
-                    );
+                Category parsedFilterCategory = (Category)Enum.Parse(typeof(Category), filterCategory);
+                condition1 = o.Category == parsedFilterCategory;
+            };
+            if (searchString != null)
+            {
+                condition2 = o.Category.ToString().Contains(searchString)
+                    || o.Description.Contains(searchString)
+                    || o.RetrievalAddress.Contains(searchString);
+            };
+
+            return condition1 && condition2;
+        }
+
+        public async Task<IActionResult> Marketplace(string filterCategory, string searchString)
+        {
+            ViewData["filterCategory"] = filterCategory;
+            ViewData["searchString"] = searchString;
+
+            List<Offer> offers = await _context.Offer
+                .Include(o => o.Photos)
+                .ToListAsync();
+
+            List<Offer> filteredOffers = new List<Offer>();
+            foreach(Offer o in offers)
+            {
+                if(marketplaceWhereConditions(o, filterCategory, searchString))
+                {
+                    filteredOffers.Add(o);
+                }
             }
-            return View(
-                    await _context.Offer
-                        .Include(o => o.Photos).ToListAsync()
-                );
+            return View(filteredOffers);
         }
 
         // GET: Offers
@@ -47,7 +66,7 @@ namespace WebApp.Controllers
         {
             var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
             if (currentUser == null) return View(Consts.UnauthErrorPagePath);
-
+            
             return _context.Offer != null ?
                 View(
                     await _context.Offer
