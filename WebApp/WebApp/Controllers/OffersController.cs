@@ -51,7 +51,7 @@ namespace WebApp.Controllers
             List<Offer> offers = await _context.Offer
                 .Include(o => o.Photos)
                 .Include(o => o.InterestedUsers)
-                .Where(o => !o.isRealized)
+                .Where(o => !o.isRealized && DateTime.Compare(o.VoidDate, DateTime.Now) > 0)
                 .ToListAsync();
 
             List<Offer> filteredOffers = new List<Offer>();
