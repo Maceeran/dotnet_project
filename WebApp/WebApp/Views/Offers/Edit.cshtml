@@ -37,14 +37,25 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Reserved for</label>
-                <select name="reservedForUserId" class="form-control">
-                    <option>Nobody</option>
+                <select name="reservedInterestedOfferId" class="form-control">
                     @foreach (UserInterestedOffer userInterestedOffer in Model.InterestedUsers)
                     {
-                        <option value="@userInterestedOffer.Id">@userInterestedOffer.User</option>
+                        @if (userInterestedOffer.ReservedForUser)
+                        {
+                            <option selected value="@userInterestedOffer.Id">@(((List<(string, string)>) ViewBag.interestedUsersMapping).Find((ium) => ium.Item1 == userInterestedOffer.UserId).Item2)</option>
+                        } else
+                        {
+                            <option value="@userInterestedOffer.Id">@(((List<(string, string)>) ViewBag.interestedUsersMapping).Find((ium) => ium.Item1 == userInterestedOffer.UserId).Item2)</option>
+                        }
+                    }
+                    @if (Model.InterestedUsers.Exists(iu => iu.ReservedForUser))
+                    {
+                        <option value="-1">Nobody</option>
+                    } else
+                    {
+                        <option value="-1" selected>Nobody</option>
                     }
                 </select>
-                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -52,7 +63,6 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-controller="Photos" asp-action="Upload" asp-route-id="@Model.Id">View, remove & upload photos</a>
 </div>

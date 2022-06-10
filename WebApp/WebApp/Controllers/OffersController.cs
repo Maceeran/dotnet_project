@@ -15,11 +15,13 @@ namespace WebApp.Controllers
 {
     public class OffersController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public OffersController(ApplicationDbContext context)
+        public OffersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         bool marketplaceWhereConditions(Offer o, string filterCategory, string searchString)
         {
@@ -75,6 +77,7 @@ namespace WebApp.Controllers
                 userInterestedOffer = new UserInterestedOffer();
                 userInterestedOffer.OfferId = int.Parse(offerId);
                 userInterestedOffer.UserId = currentUser.Value;
+                userInterestedOffer.User = await _userManager.FindByIdAsync(currentUser.Value);
                 _context.Add(userInterestedOffer);
             } else
             {
@@ -162,14 +165,27 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
+
             var offer = await _context.Offer
                 .Include(o => o.InterestedUsers)
                 .FirstOrDefaultAsync(o => o.Id == id);
-
+            
             if (offer == null)
             {
                 return NotFound();
             }
+
+            var interestedUsers = await _context.UserInterestedOffer
+                .Where(uio => uio.OfferId == offer.Id)
+                .ToListAsync();
+
+            var interestedUsersMapping = new List<(string, string)>();
+            foreach (var interestedUser in interestedUsers)
+            {
+                interestedUsersMapping.Add((interestedUser.UserId, (await _userManager.FindByIdAsync(interestedUser.UserId)).Email));
+            }
+            ViewBag.interestedUsersMapping = interestedUsersMapping;
+
             return View(offer);
         }
 
@@ -178,7 +194,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,RetrievalAddress,VoidDate")] Offer offer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,RetrievalAddress,VoidDate")] Offer offer, int reservedInterestedOfferId)
         {
             var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
             if (currentUser == null) return View(Consts.UnauthErrorPagePath);
@@ -192,6 +208,26 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    if (reservedInterestedOfferId != null)
+                    {
+                        List<UserInterestedOffer> userInterestedOffers = await _context.UserInterestedOffer
+                            .Where(uio => uio.OfferId == offer.Id)
+                            .ToListAsync();
+
+                        foreach (UserInterestedOffer elem in userInterestedOffers)
+                        {
+                            if (elem.Id == reservedInterestedOfferId)
+                            {
+                                elem.ReservedForUser = true;
+                            }
+                            else
+                            {
+                                elem.ReservedForUser = false;
+                            }
+                            _context.Update(elem);
+                        }
+                    }
+
                     offer.UserId = currentUser.Value;
                     _context.Update(offer);
                     await _context.SaveChangesAsync();
