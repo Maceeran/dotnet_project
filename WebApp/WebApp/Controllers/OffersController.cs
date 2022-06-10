@@ -51,6 +51,7 @@ namespace WebApp.Controllers
             List<Offer> offers = await _context.Offer
                 .Include(o => o.Photos)
                 .Include(o => o.InterestedUsers)
+                .Where(o => !o.isRealized)
                 .ToListAsync();
 
             List<Offer> filteredOffers = new List<Offer>();
@@ -194,7 +195,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,RetrievalAddress,VoidDate")] Offer offer, int reservedInterestedOfferId)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,RetrievalAddress,VoidDate,isRealized")] Offer offer, int reservedInterestedOfferId)
         {
             var currentUser = this.User.FindFirst(ClaimTypes.NameIdentifier);
             if (currentUser == null) return View(Consts.UnauthErrorPagePath);

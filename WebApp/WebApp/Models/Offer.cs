@@ -15,5 +15,11 @@ namespace WebApp.Models
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
         public List<UserInterestedOffer>? InterestedUsers { get; set; }
+        public bool isRealized { get; set; }
+
+        public Offer()
+        {
+            isRealized = false;
+        }
     }
 }
