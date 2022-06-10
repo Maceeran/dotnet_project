@@ -46,7 +46,6 @@
     @foreach (var offer in Model)
     {
         <div class="row border-bottom py-4" style="text-align:center; @(isOfferReserved(offer) ? "background-color:#FEFFC3" : "")">
-            @isOfferMine(offer)
             @if (isOfferReserved(offer))
             {
                 <div style="font-weight:bold">
@@ -128,7 +127,11 @@
 
     bool isOfferReserved(Offer offer)
     {
-        return offer.InterestedUsers.Count() > 0;
+        if (offer.InterestedUsers.Count() == 0)
+            return false;
+        if (offer.InterestedUsers.Exists(iu => iu.ReservedForUser))
+            return true;
+        return false;
     }
 
     bool isOfferMine(Offer offer)
